@@ -8,6 +8,7 @@ public class StateCensusAnalyserTest {
 
 	public final String CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusData.csv";
 	public final String WRONG_CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusD.csv";
+	public final String WRONG_TYPE_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusData.txt";
 
 	private static StateCensusAnalyser censusAnalyser;
 
@@ -16,6 +17,7 @@ public class StateCensusAnalyserTest {
 		censusAnalyser = new StateCensusAnalyser();
 	}
 
+	// TC-1.1
 	@Test
 	public void givenStateCsvFile_CheckNumberOfRecords_ShouldReturnNumber() {
 		try {
@@ -26,10 +28,20 @@ public class StateCensusAnalyserTest {
 		}
 	}
 
+	// TC-1.2
 	@Test
 	public void givenWrongStateCsvFile_CheckPresentOrNot_ShouldReturnException() {
 		try {
 			int numberOfStates = censusAnalyser.loadCensusData(WRONG_CSV_FILE_PATH);
+		} catch (CensusAnalyserException exception) {
+			Assert.assertEquals("file is not found", exception.getMessage());
+		}
+	}
+
+	@Test
+	public void givenWrongTypeFile_checkCsvOrNot_ShouldReturnCustomException() {
+		try {
+			int numberOfStates = censusAnalyser.loadCensusData(WRONG_TYPE_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("file is not found", exception.getMessage());
 		}
