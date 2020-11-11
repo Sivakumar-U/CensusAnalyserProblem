@@ -7,6 +7,7 @@ import org.junit.Test;
 public class StateCensusAnalyserTest {
 
 	public final String CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusData.csv";
+	public final String WRONG_CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusD.csv";
 
 	private static StateCensusAnalyser censusAnalyser;
 
@@ -22,6 +23,15 @@ public class StateCensusAnalyserTest {
 			Assert.assertEquals(29, numberOfStates);
 		} catch (Exception ex) {
 			ex.getMessage();
+		}
+	}
+
+	@Test
+	public void givenWrongStateCsvFile_CheckPresentOrNot_ShouldReturnException() {
+		try {
+			int numberOfStates = censusAnalyser.loadCensusData(WRONG_CSV_FILE_PATH);
+		} catch (CensusAnalyserException exception) {
+			Assert.assertEquals("file is not found", exception.getMessage());
 		}
 	}
 }
