@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.google.gson.Gson;
+
 public class StateDataLoaderTest {
 
 	public final String CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusData.csv";
@@ -120,6 +122,18 @@ public class StateDataLoaderTest {
 			stateDataLoader.loadStateCodeData(STATE_CODE_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("delimiter or header is improper", exception.getMessage());
+		}
+	}
+
+	@Test
+	public void givenIndianCensusData_WhenSortedOnState_ShouldReturnResult() {
+		try {
+			stateDataLoader.loadCensusData(CSV_FILE_PATH);
+			String sortedCensusData = stateDataLoader.getSortedCensusData();
+			CSVStateCensus[] csvStateCensuses = new Gson().fromJson(sortedCensusData, CSVStateCensus[].class);
+			Assert.assertEquals("Andhra Pradesh", csvStateCensuses[0].getState());
+		} catch (CensusAnalyserException exception) {
+			exception.printStackTrace();
 		}
 	}
 
