@@ -9,8 +9,6 @@ public class StateCensusAnalyserTest {
 	public final String CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusData.csv";
 	public final String WRONG_CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusD.csv";
 	public final String WRONG_TYPE_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusData.txt";
-	public final String DELIMITER_ERROR_CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensus.csv";
-	public final String HEADER_ERROR_CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusHeader.csv";
 
 	private static StateCensusAnalyser censusAnalyser;
 
@@ -54,7 +52,7 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void givenDelimiterErrorStateCsvFile_CheckPresentOrNot_ShouldReturnCustomException() {
 		try {
-			censusAnalyser.loadCensusData(DELIMITER_ERROR_CSV_FILE_PATH);
+			censusAnalyser.loadCensusData(CSV_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("delimiter or header is improper", exception.getMessage());
 		}
@@ -64,7 +62,7 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void givenIndianCensusDataProper_WithImproperHeader_ShouldReturnCustomException() {
 		try {
-			censusAnalyser.loadCensusData(HEADER_ERROR_CSV_FILE_PATH);
+			censusAnalyser.loadCensusData(CSV_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("delimiter or header is improper", exception.getMessage());
 		}
