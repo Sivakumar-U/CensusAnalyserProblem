@@ -88,4 +88,13 @@ public class StateCensusAnalyserTest {
 		}
 	}
 
+	@Test
+	public void givenWrongStateCodeCsvFile_CheckPresentOrNot_ShouldReturnException() {
+		try {
+			codeHandler.loadStateCodeData(WRONG_CSV_FILE_PATH);
+		} catch (CensusAnalyserException exception) {
+			Assert.assertEquals("file is not found", exception.getMessage());
+		}
+	}
+
 }
