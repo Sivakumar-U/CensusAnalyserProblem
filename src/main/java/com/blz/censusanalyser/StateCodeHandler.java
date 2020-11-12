@@ -23,6 +23,9 @@ public class StateCodeHandler {
 				count++;
 				csvUserIterator.next();
 			}
+		} catch (RuntimeException exception) {
+			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.WRONG_FILE,
+					"delimiter or header is improper");
 		} catch (NoSuchFileException exception) {
 			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.FILE_NOT_FOUND,
 					"file is not found");
