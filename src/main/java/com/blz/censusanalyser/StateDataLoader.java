@@ -12,7 +12,7 @@ public class StateDataLoader {
 		List<CSVStateCensus> csvUserList;
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(path));
-			CsvBuilderInterface csvBuilder = new CSVBuilderFactory().getCSVBuilder();
+			CsvBuilderInterface csvBuilder = CSVBuilderFactory.getCSVBuilder();
 			csvUserList = csvBuilder.getCSVFileList(reader, CSVStateCensus.class);
 		} catch (IOException exception) {
 			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.FILE_NOT_FOUND,
@@ -30,8 +30,8 @@ public class StateDataLoader {
 		List<IndianStateCode> csvUserList;
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(path));
-			CsvBuilderInterface csvBuilderFactory = new CSVBuilderFactory().getCSVBuilder();
-			csvUserList = csvBuilderFactory.getCSVFileList(reader, IndianStateCode.class);
+			CsvBuilderInterface csvBuilder = CSVBuilderFactory.getCSVBuilder();
+			csvUserList = csvBuilder.getCSVFileList(reader, IndianStateCode.class);
 
 		} catch (IOException exception) {
 			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.FILE_NOT_FOUND,
