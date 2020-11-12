@@ -7,13 +7,13 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 public class OpenCSVBuilder implements CsvBuilderInterface {
-	public <E> Iterator<E> getCSVFileIterator(Reader reader, Class csvClass) throws CensusAnalyserException {
+	public <E> Iterator<E> getCSVFileIterator(Reader reader, Class csvClass) throws CSVBuilderException {
 		try {
 			CsvToBean<E> csvToBean = new CsvToBeanBuilder(reader).withType(csvClass).withIgnoreLeadingWhiteSpace(true)
 					.build();
 			return csvToBean.iterator();
 		} catch (RuntimeException exception) {
-			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.WRONG_FILE,
+			throw new CSVBuilderException(CSVBuilderException.exceptionType.WRONG_FILE,
 					"delimiter or header is improper");
 		}
 	}

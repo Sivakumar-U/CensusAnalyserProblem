@@ -3,7 +3,6 @@ package com.blz.censusanalyser;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
@@ -13,13 +12,13 @@ public class StateDataLoader {
 		Iterator<CSVStateCensus> csvUserIterator = null;
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(path));
-			CsvBuilderInterface csvBuilderInterface = new CSVBuilderFactory().getCSVBuilder();
-			csvBuilderInterface.getCSVFileIterator(reader, CSVStateCensus.class);
-		} catch (NoSuchFileException exception) {
+			CsvBuilderInterface csvBuilder = new CSVBuilderFactory().getCSVBuilder();
+			csvBuilder.getCSVFileIterator(reader, CSVStateCensus.class);
+		} catch (IOException exception) {
 			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.FILE_NOT_FOUND,
 					"file is not found");
-		} catch (IOException exception) {
-			exception.printStackTrace();
+		} catch (CSVBuilderException exception) {
+			throw new CensusAnalyserException(exception.getMessage(), exception.type.name());
 		}
 		return getCount(csvUserIterator);
 	}
@@ -30,11 +29,12 @@ public class StateDataLoader {
 			Reader reader = Files.newBufferedReader(Paths.get(path));
 			CsvBuilderInterface csvBuilderFactory = new CSVBuilderFactory().getCSVBuilder();
 			csvBuilderFactory.getCSVFileIterator(reader, IndianStateCode.class);
-		} catch (NoSuchFileException exception) {
+
+		} catch (IOException exception) {
 			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.FILE_NOT_FOUND,
 					"file is not found");
-		} catch (IOException exception) {
-			exception.printStackTrace();
+		} catch (CSVBuilderException exception) {
+			throw new CensusAnalyserException(exception.getMessage(), exception.type.name());
 		}
 		return getCount(csvUserIterator);
 	}
