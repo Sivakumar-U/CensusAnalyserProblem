@@ -13,7 +13,8 @@ public class StateDataLoader {
 		Iterator<CSVStateCensus> csvUserIterator = null;
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(path));
-			csvUserIterator = new OpenCSVBuilder().getCSVFileIterator(reader, CSVStateCensus.class);
+			CsvBuilderInterface csvBuilderInterface = new CSVBuilderFactory().getCSVBuilder();
+			csvBuilderInterface.getCSVFileIterator(reader, CSVStateCensus.class);
 		} catch (NoSuchFileException exception) {
 			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.FILE_NOT_FOUND,
 					"file is not found");
@@ -27,7 +28,8 @@ public class StateDataLoader {
 		Iterator<IndianStateCode> csvUserIterator = null;
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(path));
-			csvUserIterator = new OpenCSVBuilder().getCSVFileIterator(reader, IndianStateCode.class);
+			CsvBuilderInterface csvBuilderFactory = new CSVBuilderFactory().getCSVBuilder();
+			csvBuilderFactory.getCSVFileIterator(reader, IndianStateCode.class);
 		} catch (NoSuchFileException exception) {
 			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.FILE_NOT_FOUND,
 					"file is not found");
