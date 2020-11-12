@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class StateCensusAnalyserTest {
+public class StateDataLoaderTest {
 
 	public final String CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusData.csv";
 	public final String WRONG_CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusD.csv";
@@ -13,25 +13,18 @@ public class StateCensusAnalyserTest {
 	public final String STATE_CODE_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCode.csv";
 	public final String WRONG_TYPE_STATE_CODE_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCode.txt";
 
-	private static StateCensusAnalyser censusAnalyser;
+	private static StateDataLoader stateDataLoader;
 
 	@BeforeClass
-	public static void createCensusAnalyserObj() {
-		censusAnalyser = new StateCensusAnalyser();
-	}
-
-	private static StateCodeHandler codeHandler;
-
-	@BeforeClass
-	public static void createCodeHandlerObj() {
-		codeHandler = new StateCodeHandler();
+	public static void createStateDataLoaderObj() {
+		stateDataLoader = new StateDataLoader();
 	}
 
 	// TC-1.1
 	@Test
 	public void givenStateCsvFile_CheckNumberOfRecords_ShouldReturnNumber() {
 		try {
-			int numberOfStates = censusAnalyser.loadCensusData(CSV_FILE_PATH);
+			int numberOfStates = stateDataLoader.loadCensusData(CSV_FILE_PATH);
 			Assert.assertEquals(29, numberOfStates);
 		} catch (Exception exception) {
 			exception.getMessage();
@@ -42,7 +35,7 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void givenWrongStateCsvFile_CheckPresentOrNot_ShouldReturnException() {
 		try {
-			censusAnalyser.loadCensusData(WRONG_CSV_FILE_PATH);
+			stateDataLoader.loadCensusData(WRONG_CSV_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("file is not found", exception.getMessage());
 		}
@@ -52,7 +45,7 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void givenWrongTypeFile_CheckCsvOrNot_ShouldReturnCustomException() {
 		try {
-			censusAnalyser.loadCensusData(WRONG_TYPE_FILE_PATH);
+			stateDataLoader.loadCensusData(WRONG_TYPE_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("file is not found", exception.getMessage());
 		}
@@ -62,7 +55,7 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void givenDelimiterErrorStateCsvFile_CheckPresentOrNot_ShouldReturnCustomException() {
 		try {
-			censusAnalyser.loadCensusData(CSV_FILE_PATH);
+			stateDataLoader.loadCensusData(CSV_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("delimiter or header is improper", exception.getMessage());
 		}
@@ -72,7 +65,7 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void givenIndianCensusDataProper_WithImproperHeader_ShouldReturnCustomException() {
 		try {
-			censusAnalyser.loadCensusData(CSV_FILE_PATH);
+			stateDataLoader.loadCensusData(CSV_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("delimiter or header is improper", exception.getMessage());
 		}
@@ -82,7 +75,7 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void givenStateCodeCsvFile_CheckNumberOfRecords_ShouldReturnNumber() {
 		try {
-			int numberOfStates = codeHandler.loadStateCodeData(STATE_CODE_FILE_PATH);
+			int numberOfStates = stateDataLoader.loadStateCodeData(STATE_CODE_FILE_PATH);
 			Assert.assertEquals(37, numberOfStates);
 		} catch (Exception exception) {
 			exception.getMessage();
@@ -93,7 +86,7 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void givenWrongStateCodeCsvFile_CheckPresentOrNot_ShouldReturnException() {
 		try {
-			codeHandler.loadStateCodeData(WRONG_CSV_FILE_PATH);
+			stateDataLoader.loadStateCodeData(WRONG_CSV_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("file is not found", exception.getMessage());
 		}
@@ -103,7 +96,7 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void givenWrongTypeStateCodeCsvFile_CheckCsvOrNot_ShouldReturnException() {
 		try {
-			codeHandler.loadStateCodeData(WRONG_TYPE_STATE_CODE_FILE_PATH);
+			stateDataLoader.loadStateCodeData(WRONG_TYPE_STATE_CODE_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("file is not found", exception.getMessage());
 		}
@@ -113,7 +106,7 @@ public class StateCensusAnalyserTest {
 	@Test
 	public void givenDelimiterErrorStateCodeFile_CheckPresentOrNot_ShouldReturnCustomException() {
 		try {
-			codeHandler.loadStateCodeData(STATE_CODE_FILE_PATH);
+			stateDataLoader.loadStateCodeData(STATE_CODE_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("delimiter or header is improper", exception.getMessage());
 		}
@@ -124,7 +117,7 @@ public class StateCensusAnalyserTest {
 	public void givenHeaderErrorStateCodeFile_CheckPresentOrNot_ShouldReturnCustomException() {
 		try {
 
-			codeHandler.loadStateCodeData(STATE_CODE_FILE_PATH);
+			stateDataLoader.loadStateCodeData(STATE_CODE_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("delimiter or header is improper", exception.getMessage());
 		}
