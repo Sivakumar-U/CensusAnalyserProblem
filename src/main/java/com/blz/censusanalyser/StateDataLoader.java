@@ -11,39 +11,40 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 public class StateDataLoader {
-	int count;
 
 	public int loadCensusData(String path) throws CensusAnalyserException {
-
+		Iterator<CSVStateCensus> csvUserIterator = null;
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(path));
-			Iterator<CSVStateCensus> csvUserIterator = this.getCSVFileIterator(reader, CSVStateCensus.class);
-			while (csvUserIterator.hasNext()) {
-				count++;
-				csvUserIterator.next();
-			}
+			csvUserIterator = this.getCSVFileIterator(reader, CSVStateCensus.class);
 		} catch (NoSuchFileException exception) {
 			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.FILE_NOT_FOUND,
 					"file is not found");
 		} catch (IOException exception) {
 			exception.printStackTrace();
 		}
-		return count;
+		return getCount(csvUserIterator);
 	}
 
 	public int loadStateCodeData(String path) throws CensusAnalyserException {
+		Iterator<IndianStateCode> csvUserIterator = null;
 		try {
 			Reader reader = Files.newBufferedReader(Paths.get(path));
-			Iterator<IndianStateCode> csvUserIterator = this.getCSVFileIterator(reader, IndianStateCode.class);
-			while (csvUserIterator.hasNext()) {
-				count++;
-				csvUserIterator.next();
-			}
+			csvUserIterator = this.getCSVFileIterator(reader, IndianStateCode.class);
 		} catch (NoSuchFileException exception) {
 			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.FILE_NOT_FOUND,
 					"file is not found");
 		} catch (IOException exception) {
 			exception.printStackTrace();
+		}
+		return getCount(csvUserIterator);
+	}
+
+	private <E> int getCount(Iterator<E> csvUserIterator) {
+		int count = 0;
+		while (csvUserIterator.hasNext()) {
+			count++;
+			csvUserIterator.next();
 		}
 		return count;
 	}
