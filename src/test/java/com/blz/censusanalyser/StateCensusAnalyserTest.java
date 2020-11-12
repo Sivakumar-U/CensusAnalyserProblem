@@ -109,10 +109,21 @@ public class StateCensusAnalyserTest {
 		}
 	}
 
-	// Tc-2.4
+	// TC-2.4
 	@Test
 	public void givenDelimiterErrorStateCodeFile_CheckPresentOrNot_ShouldReturnCustomException() {
 		try {
+			codeHandler.loadStateCodeData(STATE_CODE_FILE_PATH);
+		} catch (CensusAnalyserException exception) {
+			Assert.assertEquals("delimiter or header is improper", exception.getMessage());
+		}
+	}
+
+	// TC-2.5
+	@Test
+	public void givenHeaderErrorStateCodeFile_CheckPresentOrNot_ShouldReturnCustomException() {
+		try {
+
 			codeHandler.loadStateCodeData(STATE_CODE_FILE_PATH);
 		} catch (CensusAnalyserException exception) {
 			Assert.assertEquals("delimiter or header is improper", exception.getMessage());
