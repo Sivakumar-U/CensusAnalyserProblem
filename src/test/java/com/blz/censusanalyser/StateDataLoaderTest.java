@@ -160,4 +160,16 @@ public class StateDataLoaderTest {
 		}
 	}
 
+	@Test
+	public void givenStateCodeData_WhenSortedOnPopulationDensity_ShouldReturnResult() {
+		try {
+			stateDataLoader.loadCensusData(CSV_FILE_PATH);
+			String sortedCensusData = stateDataLoader.getSortedCensusByPopulation();
+			IndianCensusDao[] csvStateCensus = new Gson().fromJson(sortedCensusData, IndianCensusDao[].class);
+			Assert.assertEquals(828, csvStateCensus[csvStateCensus.length - 1].densityPerSqKm);
+		} catch (CensusAnalyserException exception) {
+			exception.printStackTrace();
+		}
+	}
+
 }
