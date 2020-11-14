@@ -42,6 +42,14 @@ public class StateDataLoader {
 		return new Gson().toJson(sortedList);
 	}
 
+	public String getSortedCensusByPopulationDensity() throws CensusAnalyserException {
+		if (csvStateCensusMap == null || csvStateCensusMap.size() == 0)
+			throw new CensusAnalyserException(CensusAnalyserException.exceptionType.NO_CENSUS_DATA, "no census data");
+		Comparator<IndianCensusDao> stateCodeComparator = Comparator.comparing(census -> census.densityPerSqKm);
+		List<IndianCensusDao> sortedList = this.sort(stateCodeComparator, new ArrayList<>(csvStateCensusMap.values()));
+		return new Gson().toJson(sortedList);
+	}
+
 	private <E> List<E> sort(Comparator<E> comparator, List<E> censusList) {
 		for (int index1 = 0; index1 < censusList.size() - 1; index1++) {
 			for (int index2 = 0; index2 < censusList.size() - index1 - 1; index2++) {
