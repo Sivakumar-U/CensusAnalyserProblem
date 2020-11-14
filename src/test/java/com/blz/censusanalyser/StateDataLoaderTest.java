@@ -172,4 +172,16 @@ public class StateDataLoaderTest {
 		}
 	}
 
+	@Test
+	public void givenStateCodeData_WhenSortedOnArea_ShouldReturnResult() {
+		try {
+			stateDataLoader.loadCensusData(CSV_FILE_PATH);
+			String sortedCensusData = stateDataLoader.getSortedCensusByPopulation();
+			IndianCensusDao[] csvStateCensus = new Gson().fromJson(sortedCensusData, IndianCensusDao[].class);
+			Assert.assertEquals(240928, csvStateCensus[csvStateCensus.length - 1].areaInSqKm);
+		} catch (CensusAnalyserException exception) {
+			exception.printStackTrace();
+		}
+	}
+
 }
