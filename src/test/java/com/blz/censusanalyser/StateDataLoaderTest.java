@@ -8,12 +8,11 @@ import com.google.gson.Gson;
 
 public class StateDataLoaderTest {
 
-	public final String CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusData.csv";
-	public final String WRONG_CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusD.csv";
-	public final String WRONG_TYPE_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusData.txt";
-
-	public final String STATE_CODE_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCode.csv";
-	public final String WRONG_TYPE_STATE_CODE_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCode.txt";
+	private static final String CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusData.csv";
+	private static final String WRONG_CSV_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusD.csv";
+	private static final String WRONG_TYPE_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCensusData.txt";
+	private static final String STATE_CODE_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCode.csv";
+	private static final String WRONG_TYPE_STATE_CODE_FILE_PATH = "C:\\Users\\Siva Reddy\\StateCode.txt";
 
 	private static StateDataLoader stateDataLoader;
 
@@ -132,6 +131,18 @@ public class StateDataLoaderTest {
 			String sortedCensusData = stateDataLoader.getSortedCensusData();
 			CSVStateCensus[] csvStateCensuses = new Gson().fromJson(sortedCensusData, CSVStateCensus[].class);
 			Assert.assertEquals("Andhra Pradesh", csvStateCensuses[0].getState());
+		} catch (CensusAnalyserException exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	@Test
+	public void givenStateCodeData_WhenSortedOnStateCode_ShouldReturnResult() {
+		try {
+			stateDataLoader.loadStateCodeData(STATE_CODE_FILE_PATH);
+			String sortedCensusData = stateDataLoader.getSortedStateCodeData();
+			IndianStateCode[] indianStateCode = new Gson().fromJson(sortedCensusData, IndianStateCode[].class);
+			Assert.assertEquals("AD", indianStateCode[0].getStateCode());
 		} catch (CensusAnalyserException exception) {
 			exception.printStackTrace();
 		}
